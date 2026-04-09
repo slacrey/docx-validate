@@ -1,0 +1,66 @@
+Metadata-Version: 2.4
+Name: docx-validate
+Version: 0.1.0
+Summary: Document validation service bootstrap
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: fastapi<1.0,>=0.115
+Requires-Dist: sqlalchemy<3.0,>=2.0
+Requires-Dist: python-multipart<1.0,>=0.0.9
+Requires-Dist: uvicorn<1.0,>=0.34
+Provides-Extra: dev
+Requires-Dist: httpx<1.0,>=0.28; extra == "dev"
+Requires-Dist: pytest<9.0,>=8.0; extra == "dev"
+
+# docx-validate
+
+用于 `.docx` 文档检测服务的后端引导工程。当前版本已经提供：
+
+- FastAPI 应用骨架和健康检查接口
+- 基于 SQLAlchemy 的任务、规则集元数据持久化
+- 文档上传、任务创建、任务状态查询
+- 占位校验执行流，会生成空问题报告 `results/{task_no}/report.json`
+
+## 环境要求
+
+- Python 3.11+
+
+## 安装依赖
+
+```bash
+python3 -m pip install -e '.[dev]'
+```
+
+## 运行测试
+
+```bash
+python3 -m pytest -q
+```
+
+## 本地启动
+
+默认会在当前目录创建 `docx_validate.db` 和 `var/storage/`。也可以通过环境变量覆盖：
+
+- `DOCX_VALIDATE_DATABASE_URL`
+- `DOCX_VALIDATE_STORAGE_ROOT`
+- `DOCX_VALIDATE_API_PREFIX`
+
+启动命令：
+
+```bash
+python3 -m uvicorn docx_validate.main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+## 当前接口
+
+- `GET /api/v1/health`
+- `POST /api/v1/rules`
+- `GET /api/v1/rules/{id}`
+- `POST /api/v1/tasks`
+- `GET /api/v1/tasks/{task_no}`
+
+## 后续迭代方向
+
+- 模板元数据和模板上传接口
+- 真实校验引擎与异步任务执行
+- JSON/CSV 报告与批注文档产出
