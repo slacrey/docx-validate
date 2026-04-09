@@ -11,19 +11,44 @@
 
 - Python 3.11+
 
-## 安装依赖
+## 首次安装
+
+推荐使用项目根目录下的 `.venv` 虚拟环境：
 
 ```bash
+make install
+```
+
+上面的命令会自动：
+
+- 创建 `.venv`
+- 安装项目和开发依赖
+
+如果你想手动执行，等价命令是：
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
 python3 -m pip install -e '.[dev]'
 ```
 
 ## 运行测试
 
 ```bash
-python3 -m pytest -q
+make test
 ```
 
 ## 本地启动
+
+日常开发直接使用：
+
+```bash
+make run
+```
+
+`make run` 会强制使用项目内的 `.venv`，并自动设置 `PYTHONPATH=src`，适合当前 `src/` 布局。
+
+如果你想手动启动，等价命令是：
 
 默认会在当前目录创建 `docx_validate.db` 和 `var/storage/`。也可以通过环境变量覆盖：
 
@@ -34,7 +59,7 @@ python3 -m pytest -q
 启动命令：
 
 ```bash
-python3 -m uvicorn docx_validate.main:app --host 127.0.0.1 --port 8000 --reload
+PYTHONPATH=src .venv/bin/python -m uvicorn docx_validate.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
 ## 当前接口
