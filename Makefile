@@ -10,7 +10,7 @@ $(VENV_PYTHON):
 install: venv
 	$(VENV_PYTHON) -m pip install -e '.[dev]'
 
-test: venv
+test: install
 	PYTHONPATH=src $(VENV_PYTHON) -m pytest -q
 
 run:

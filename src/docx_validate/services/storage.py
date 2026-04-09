@@ -17,6 +17,9 @@ class LocalStorage:
             json.dumps(content, ensure_ascii=False, indent=2).encode("utf-8"),
         )
 
+    def resolve_path(self, object_key: str) -> Path:
+        return self.root / object_key
+
 
 from fastapi import Request
 

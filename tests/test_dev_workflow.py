@@ -33,3 +33,4 @@ def test_makefile_exposes_common_dev_targets():
         assert target in makefile
 
     assert "scripts/dev.sh" in makefile
+    assert "test: install" in makefile
